@@ -2,9 +2,10 @@ import { Router, Response, Request } from 'express';
 import { verificaToken } from '../middlewares/autenticacion';
 import { Post } from '../models/post.model';
 import { FileUpload } from '../interfaces/file-upload';
+import FileSisytem from '../class/file-system';
 
 const postRoutes = Router();
-
+const fileSystem = new FileSisytem();
 
 //creamos un Post
 postRoutes.post('/create', verificaToken, (req: any, res: Response) => {
@@ -59,7 +60,7 @@ postRoutes.post('/upload', verificaToken, (req: any, res: Response) => {
             mensaje: 'no se subio ningun image'
         });
     }
-
+    fileSystem.guardarImagenTemporal(file, req.usuario._id);
     if(!file.mimetype.includes('image')) {
         return res.status(400).json({
             mensaje: 'el archivo seleccionado no es una imagen'
