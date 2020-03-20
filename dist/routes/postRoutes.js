@@ -13,6 +13,7 @@ const express_1 = require("express");
 const autenticacion_1 = require("../middlewares/autenticacion");
 const post_model_1 = require("../models/post.model");
 const postRoutes = express_1.Router();
+//creamos un Post
 postRoutes.post('/create', autenticacion_1.verificaToken, (req, res) => {
     const body = req.body;
     //obtenemos el usuario id del token que viene en la cabecera de la peticion
@@ -31,4 +32,21 @@ postRoutes.post('/create', autenticacion_1.verificaToken, (req, res) => {
         });
     });
 });
+//obtenemos los Post de manera paginada
+postRoutes.get('/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let pagina = Number(req.query.pagina) || 1;
+    let skip = pagina - 1;
+    skip = skip * 10;
+    const posts = yield post_model_1.Post.find()
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(10)
+        .populate('user', '-password')
+        .exec();
+    res.json({
+        mensaje: 'ok',
+        pagina,
+        posts
+    });
+}));
 exports.default = postRoutes;
