@@ -8,9 +8,9 @@ const user_model_1 = require("../models/user.model");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const token_1 = __importDefault(require("../dist/class/token"));
 const autenticacion_1 = require("../middlewares/autenticacion");
-const routes = express_1.Router();
+const routesUser = express_1.Router();
 //login usuario
-routes.post('/login', (req, res) => {
+routesUser.post('/login', (req, res) => {
     const body = req.body;
     user_model_1.User.findOne({ email: body.email }, (err, userDb) => {
         if (err)
@@ -40,7 +40,7 @@ routes.post('/login', (req, res) => {
     });
 });
 //crear usuario
-routes.post('/create', (req, res) => {
+routesUser.post('/create', (req, res) => {
     const user = {
         nombre: req.body.nombre,
         email: req.body.email,
@@ -66,7 +66,7 @@ routes.post('/create', (req, res) => {
     });
 });
 //actualizar usuario
-routes.put('/update', autenticacion_1.verificaToken, (req, res) => {
+routesUser.put('/update', autenticacion_1.verificaToken, (req, res) => {
     const user = {
         //si el nombre viene en null usa el nombre del token
         nombre: req.body.nombre || req.usuario.nombre,
@@ -96,4 +96,4 @@ routes.put('/update', autenticacion_1.verificaToken, (req, res) => {
         });
     });
 });
-exports.default = routes;
+exports.default = routesUser;

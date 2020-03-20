@@ -1,7 +1,9 @@
 import Server from './class/server';
-import routes from './routes/userRoutes';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+
+import routesUser from './routes/userRoutes';
+import postRoutes from './routes/postRoutes';
 
 const server = new Server();
 
@@ -10,7 +12,8 @@ server.app.use(bodyParser.urlencoded({extended: true}));
 server.app.use(bodyParser.json());
 
 //middleware  --rutas
-server.app.use('/api', routes)
+server.app.use('/user', routesUser)
+server.app.use('/post', postRoutes)
 
 
 //conectar con la base de datos

@@ -3,11 +3,11 @@ import { User } from '../models/user.model';
 import bcrypt from 'bcrypt';
 import Token from '../dist/class/token';
 import { verificaToken } from '../middlewares/autenticacion';
-const routes = Router();
 
+const routesUser = Router();
 
 //login usuario
-routes.post('/login', (req: Request, res: Response) => {
+routesUser.post('/login', (req: Request, res: Response) => {
     const body = req.body;
     User.findOne({ email: body.email }, (err, userDb) => {
         if (err) throw err;
@@ -37,7 +37,7 @@ routes.post('/login', (req: Request, res: Response) => {
 
 
 //crear usuario
-routes.post('/create', (req: Request, res: Response) => {
+routesUser.post('/create', (req: Request, res: Response) => {
 
     const user = {
         nombre: req.body.nombre,
@@ -66,7 +66,7 @@ routes.post('/create', (req: Request, res: Response) => {
 });
 
 //actualizar usuario
-routes.put('/update', verificaToken, (req: any, res: Response) => {
+routesUser.put('/update', verificaToken, (req: any, res: Response) => {
     const user = {
                 //si el nombre viene en null usa el nombre del token
         nombre: req.body.nombre || req.usuario.nombre,
@@ -99,4 +99,4 @@ routes.put('/update', verificaToken, (req: any, res: Response) => {
     });
 });
 
-export default routes;
+export default routesUser;
