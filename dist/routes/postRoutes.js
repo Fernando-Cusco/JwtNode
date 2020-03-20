@@ -55,7 +55,7 @@ postRoutes.get('/posts', (req, res) => __awaiter(void 0, void 0, void 0, functio
     });
 }));
 //servicio para subir archivos
-postRoutes.post('/upload', autenticacion_1.verificaToken, (req, res) => {
+postRoutes.post('/upload', autenticacion_1.verificaToken, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (!req.files) {
         return res.status(400).json({
             mensaje: 'no se subio ningun archivo'
@@ -67,7 +67,7 @@ postRoutes.post('/upload', autenticacion_1.verificaToken, (req, res) => {
             mensaje: 'no se subio ningun image'
         });
     }
-    fileSystem.guardarImagenTemporal(file, req.usuario._id);
+    yield fileSystem.guardarImagenTemporal(file, req.usuario._id);
     if (!file.mimetype.includes('image')) {
         return res.status(400).json({
             mensaje: 'el archivo seleccionado no es una imagen'
@@ -77,5 +77,5 @@ postRoutes.post('/upload', autenticacion_1.verificaToken, (req, res) => {
         mensaje: 'ok',
         file: file.mimetype
     });
-});
+}));
 exports.default = postRoutes;

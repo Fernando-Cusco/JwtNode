@@ -47,7 +47,7 @@ postRoutes.get('/posts', async (req: any, res: Response) => {
 
 
 //servicio para subir archivos
-postRoutes.post('/upload', verificaToken, (req: any, res: Response) => {
+postRoutes.post('/upload', verificaToken, async (req: any, res: Response) => {
     if(!req.files) {
         return res.status(400).json({
             mensaje: 'no se subio ningun archivo'
@@ -60,7 +60,7 @@ postRoutes.post('/upload', verificaToken, (req: any, res: Response) => {
             mensaje: 'no se subio ningun image'
         });
     }
-    fileSystem.guardarImagenTemporal(file, req.usuario._id);
+    await fileSystem.guardarImagenTemporal(file, req.usuario._id);
     if(!file.mimetype.includes('image')) {
         return res.status(400).json({
             mensaje: 'el archivo seleccionado no es una imagen'

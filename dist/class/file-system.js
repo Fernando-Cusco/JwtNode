@@ -10,11 +10,21 @@ class FileSisytem {
     constructor() {
     }
     guardarImagenTemporal(file, userId) {
-        //crear carpetas
-        const path = this.crearCarpetaUsuario(userId);
-        //generar nombre unico del archivo
-        const unico = this.generarNombre(file.name);
-        console.log(unico);
+        return new Promise((resolve, reject) => {
+            //crear carpetas
+            const path = this.crearCarpetaUsuario(userId);
+            //generar nombre unico del archivo
+            const unico = this.generarNombre(file.name);
+            //Mover el archivo al tmp
+            file.mv(`${path}.${unico}`, (err) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve();
+                }
+            });
+        });
     }
     generarNombre(nombreOriginal) {
         //extraer el formato de la imagen
