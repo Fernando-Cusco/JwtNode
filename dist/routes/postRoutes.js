@@ -49,4 +49,27 @@ postRoutes.get('/posts', (req, res) => __awaiter(void 0, void 0, void 0, functio
         posts
     });
 }));
+//servicio para subir archivos
+postRoutes.post('/upload', autenticacion_1.verificaToken, (req, res) => {
+    if (!req.files) {
+        return res.status(400).json({
+            mensaje: 'no se subio ningun archivo'
+        });
+    }
+    const file = req.files.image;
+    if (!file) {
+        return res.status(400).json({
+            mensaje: 'no se subio ningun image'
+        });
+    }
+    if (!file.mimetype.includes('image')) {
+        return res.status(400).json({
+            mensaje: 'el archivo seleccionado no es una imagen'
+        });
+    }
+    return res.json({
+        mensaje: 'ok',
+        file: file.mimetype
+    });
+});
 exports.default = postRoutes;

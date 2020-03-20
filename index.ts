@@ -1,6 +1,7 @@
 import Server from './class/server';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
+import fileUpload from 'express-fileupload';
 
 import routesUser from './routes/userRoutes';
 import postRoutes from './routes/postRoutes';
@@ -10,6 +11,9 @@ const server = new Server();
 //Parsear
 server.app.use(bodyParser.urlencoded({extended: true}));
 server.app.use(bodyParser.json());
+
+//FileUpload
+server.app.use(fileUpload());
 
 //middleware  --rutas
 server.app.use('/user', routesUser)
