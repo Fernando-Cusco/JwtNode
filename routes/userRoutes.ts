@@ -97,6 +97,17 @@ routesUser.put('/update', verificaToken, (req: any, res: Response) => {
         });
         
     });
+
 });
+
+routesUser.get('/', verificaToken, (req:  any, res: Response) => {
+    const usuario = req.usuario;
+    res.json({
+        mensaje: 'ok',
+        usuario
+    })
+});
+
+
 
 export default routesUser;

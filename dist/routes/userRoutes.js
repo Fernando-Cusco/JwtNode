@@ -96,4 +96,11 @@ routesUser.put('/update', autenticacion_1.verificaToken, (req, res) => {
         });
     });
 });
+routesUser.get('/', autenticacion_1.verificaToken, (req, res) => {
+    const usuario = req.usuario;
+    res.json({
+        mensaje: 'ok',
+        usuario
+    });
+});
 exports.default = routesUser;
