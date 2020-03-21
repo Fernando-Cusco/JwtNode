@@ -23,6 +23,8 @@ postRoutes.post('/create', autenticacion_1.verificaToken, (req, res) => {
     const body = req.body;
     //obtenemos el usuario id del token que viene en la cabecera de la peticion
     body.user = req.usuario._id;
+    const imagenes = fileSystem.imagenesTempAPost(req.usuario._id);
+    body.imgs = imagenes;
     post_model_1.Post.create(body).then((postDB) => __awaiter(void 0, void 0, void 0, function* () {
         //obtiene la relacion que tiene el Post con User y saca toda la informacion del usuario y omite mostrar la password
         yield postDB.populate('user', '-password').execPopulate();
@@ -73,7 +75,7 @@ postRoutes.post('/upload', autenticacion_1.verificaToken, (req, res) => __awaite
             mensaje: 'el archivo seleccionado no es una imagen'
         });
     }
-    return res.json({
+    res.json({
         mensaje: 'ok',
         file: file.mimetype
     });

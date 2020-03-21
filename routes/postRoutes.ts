@@ -12,6 +12,9 @@ postRoutes.post('/create', verificaToken, (req: any, res: Response) => {
     const body = req.body;
     //obtenemos el usuario id del token que viene en la cabecera de la peticion
     body.user = req.usuario._id;
+    const imagenes = fileSystem.imagenesTempAPost(req.usuario._id);
+    body.imgs = imagenes;
+
     Post.create(body).then(async postDB => {
         //obtiene la relacion que tiene el Post con User y saca toda la informacion del usuario y omite mostrar la password
         await postDB.populate('user', '-password').execPopulate();
@@ -67,7 +70,7 @@ postRoutes.post('/upload', verificaToken, async (req: any, res: Response) => {
         });
     }
     
-    return res.json({
+    res.json({
         mensaje: 'ok',
         file: file.mimetype
     });

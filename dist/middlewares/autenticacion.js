@@ -7,7 +7,6 @@ const token_1 = __importDefault(require("../dist/class/token"));
 exports.verificaToken = (req, res, next) => {
     const userToken = req.get('token') || '';
     token_1.default.comprobarToken(userToken).then((decoded) => {
-        console.log('Decoded', decoded);
         req.usuario = decoded.usuario;
         next();
     }).catch(err => {

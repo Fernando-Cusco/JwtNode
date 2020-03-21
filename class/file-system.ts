@@ -17,7 +17,7 @@ export default class FileSisytem {
             const unico = this.generarNombre(file.name);
 
             //Mover el archivo al tmp
-            file.mv(`${path}.${unico}`, (err: any) => {
+            file.mv(`${path}/${unico}`, (err: any) => {
                 if (err) {
                     reject(err);
                 } else {
@@ -50,4 +50,28 @@ export default class FileSisytem {
         return pathUserTemp;
     }
 
+    imagenesTempAPost(userId: string) {
+        const pathTmp = path.resolve(__dirname, '../uploads/', userId, 'tmp');
+        const pathPost = path.resolve(__dirname, '../uploads/', userId, 'posts');
+        if( !fs.existsSync(pathTmp)) {
+            return [];
+        }
+
+        if( !fs.existsSync(pathPost)) {
+            fs.mkdirSync(pathPost);
+        }
+
+        const imagenesTmp = this.obtenerImagenes(userId);
+        
+        imagenesTmp.forEach(imagen => {
+            fs.renameSync(`${pathTmp}/${imagen}`, `${pathPost}/${imagen}`)
+        });
+        return imagenesTmp;
+    }
+
+    private obtenerImagenes(userId: string) {
+        const pathTmp = path.resolve(__dirname, '../uploads/', userId, 'tmp');
+        
+        return fs.readdirSync(pathTmp) || [];
+    }
 }
