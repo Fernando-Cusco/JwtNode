@@ -62,5 +62,15 @@ class FileSisytem {
         const pathTmp = path_1.default.resolve(__dirname, '../uploads/', userId, 'tmp');
         return fs_1.default.readdirSync(pathTmp) || [];
     }
+    getFotoUrl(userId, imgId) {
+        //crear path del post
+        const pathImagen = path_1.default.resolve(__dirname, '../uploads/', userId, 'posts', imgId);
+        //si la imagen existe
+        const existe = fs_1.default.existsSync(pathImagen);
+        if (!existe) {
+            return path_1.default.resolve(__dirname, '../assets/app.jpg');
+        }
+        return pathImagen;
+    }
 }
 exports.default = FileSisytem;
