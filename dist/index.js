@@ -9,12 +9,15 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const userRoutes_1 = __importDefault(require("./routes/userRoutes"));
 const postRoutes_1 = __importDefault(require("./routes/postRoutes"));
+const cors_1 = __importDefault(require("cors"));
 const server = new server_1.default();
 //Parsear
 server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 //FileUpload
 server.app.use(express_fileupload_1.default());
+//configuracion de Cors
+server.app.use(cors_1.default({ origin: true, credentials: true }));
 //middleware  --rutas
 server.app.use('/user', userRoutes_1.default);
 server.app.use('/post', postRoutes_1.default);

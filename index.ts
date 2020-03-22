@@ -18,7 +18,7 @@ server.app.use(bodyParser.json());
 server.app.use(fileUpload());
 
 //configuracion de Cors
-server.app.use(cors({origin: true, credentials: true}))
+server.app.use(cors({origin: true, credentials: true}));
 
 //middleware  --rutas
 server.app.use('/user', routesUser)
