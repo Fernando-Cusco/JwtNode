@@ -67,6 +67,8 @@ routesUser.post('/create', (req: Request, res: Response) => {
 
 //actualizar usuario
 routesUser.put('/update', verificaToken, (req: any, res: Response) => {
+    console.log(req.body.nombre, req.body.email, req.body.avatar, 'llega desde el front');
+    
     const user = {
                 //si el nombre viene en null usa el nombre del token
         nombre: req.body.nombre || req.usuario.nombre,

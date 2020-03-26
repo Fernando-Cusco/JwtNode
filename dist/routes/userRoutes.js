@@ -67,6 +67,7 @@ routesUser.post('/create', (req, res) => {
 });
 //actualizar usuario
 routesUser.put('/update', autenticacion_1.verificaToken, (req, res) => {
+    console.log(req.body.nombre, req.body.email, req.body.avatar, 'llega desde el front');
     const user = {
         //si el nombre viene en null usa el nombre del token
         nombre: req.body.nombre || req.usuario.nombre,
